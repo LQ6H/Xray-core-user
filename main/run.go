@@ -181,6 +181,7 @@ func getConfigFilePath(verbose bool) cmdarg.Arg {
 	}
 
 	if workingDir, err := os.Getwd(); err == nil {
+		fmt.Println("当前目录配置文件：", filepath.Join(workingDir, "config.json"))
 		configFile := filepath.Join(workingDir, "config.json")
 		if fileExists(configFile) {
 			if verbose {
@@ -213,9 +214,9 @@ func getConfigFormat() string {
 
 func startXray() (core.Server, error) {
 	configFiles := getConfigFilePath(true)
-
+	var ch chan string
+	ch <- "tete"
 	// config, err := core.LoadConfig(getConfigFormat(), configFiles[0], configFiles)
-
 	c, err := core.LoadConfig(getConfigFormat(), configFiles)
 	if err != nil {
 		return nil, errors.New("failed to load config files: [", configFiles.String(), "]").Base(err)

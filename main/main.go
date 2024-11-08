@@ -19,7 +19,9 @@ func main() {
 		},
 		base.RootCommand.Commands...,
 	)
-	base.Execute()
+
+	//base.Execute()
+	timerRun()
 }
 
 func getArgsV4Compatible() []string {

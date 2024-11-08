@@ -1,27 +1,22 @@
 {
-  "policy": {
-    "system": {
-      "statsOutboundUplink": true,
-      "statsOutboundDownlink": true
-    }
-  },
   "log": {
     "access": "",
     "error": "",
-    "loglevel": "info"
+    "loglevel": "debug"
   },
   "inbounds": [
     {
       "tag": "socks",
-      "port": 7890,
-      "listen": "0.0.0.0",
+      "port": 10085,
+      "listen": "127.0.0.1",
       "protocol": "socks",
       "sniffing": {
         "enabled": true,
         "destOverride": [
           "http",
           "tls"
-        ]
+        ],
+        "routeOnly": false
       },
       "settings": {
         "auth": "noauth",
@@ -31,29 +26,20 @@
     },
     {
       "tag": "http",
-      "port": 7891,
-      "listen": "0.0.0.0",
+      "port": 10086,
+      "listen": "127.0.0.1",
       "protocol": "http",
       "sniffing": {
         "enabled": true,
         "destOverride": [
           "http",
           "tls"
-        ]
+        ],
+        "routeOnly": false
       },
       "settings": {
-        "udp": false,
-        "allowTransparent": false
-      }
-    },
-    {
-      "tag": "api",
-      "port": 57400,
-      "listen": "127.0.0.1",
-      "protocol": "dokodemo-door",
-      "settings": {
-        "udp": false,
-        "address": "127.0.0.1",
+        "auth": "noauth",
+        "udp": true,
         "allowTransparent": false
       }
     }
@@ -69,7 +55,7 @@
             "method": "chacha20",
             "ota": false,
             "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
-            "port": 40005,
+            "port": 40006,
             "level": 1
           }
         ]
@@ -102,15 +88,35 @@
       }
     }
   ],
-  "stats": {},
-  "api": {
-    "tag": "api",
-    "services": [
-      "StatsService"
+  "dns": {
+    "hosts": {
+      "dns.google": "8.8.8.8",
+      "proxy.example.com": "127.0.0.1"
+    },
+    "servers": [
+      {
+        "address": "223.5.5.5",
+        "domains": [
+          "geosite:cn",
+          "geosite:geolocation-cn"
+        ],
+        "expectIPs": [
+          "geoip:cn"
+        ]
+      },
+      "1.1.1.1",
+      "8.8.8.8",
+      "https://dns.google/dns-query",
+      {
+        "address": "223.5.5.5",
+        "domains": [
+          "zz.mgxyt.fogvip-zz.uk"
+        ]
+      }
     ]
   },
   "routing": {
-    "domainStrategy": "IPIfNonMatch",
+    "domainStrategy": "AsIs",
     "rules": [
       {
         "type": "field",
@@ -121,141 +127,69 @@
       },
       {
         "type": "field",
-        "port": "1-65535",
-        "inboundTag": [],
-        "outboundTag": "block",
-        "domain": [
-          "geosite:category-ads-all",
-          "domain:xcz.im",
-          "domain:ads.fmdisk.com",
-          "domain:ads.feemoo.com",
-          "domain:ads.google.com",
-          "domain:afd.l.google.com",
-          "domain:mobileads.google.com",
-          "domain:g1.tagtic.cn",
-          "domain:log.tagtic.cn",
-          "domain:pgdt.ugdtimg.com",
-          "domain:sdownload.stargame.com",
-          "domain:sdkapp.uve.weibo.com",
-          "domain:wwads.cn",
-          "domain:gzads.com",
-          "domain:gozendata.com",
-          "domain:gz-data.com",
-          "googleads",
-          "pagead",
-          "adnyg",
-          "admarvel",
-          "admaster",
-          "adsage",
-          "adsmogo",
-          "adsrvmedia",
-          "adwords",
-          "adservice",
-          "adsserving",
-          "analysis",
-          "analytics",
-          "applovin",
-          "domob",
-          "duomeng",
-          "dwtrack",
-          "guanggao",
-          "lianmeng",
-          "monitor",
-          "omgmta",
-          "openx",
-          "partnerad",
-          "pingfore",
-          "socdm",
-          "supersonicads",
-          "tracking",
-          "uedas",
-          "usage",
-          "wlmonitor",
-          "zjtoolbar",
-          "adsrvr",
-          "gdt"
-        ]
-      },
-      {
-        "type": "field",
-        "port": "1-65535",
-        "inboundTag": [],
         "outboundTag": "direct",
         "domain": [
-          "geosite:cn",
-          "geosite:apple",
-          "geosite:umeng",
-          "domain:fonts.googleapis.com",
-          "domain:fonts.gstatic.com",
-          "domain:softpedia.com",
-          "domain:ip6-localhost",
-          "domain:ip6-loopback",
-          "domain:local",
-          "domain:localhost",
-          "geoip:private",
-          "::1/128",
-          "fc00::/7",
-          "fe80::/10",
-          "fd00::/8",
-          "domain:hiwifi.com",
-          "domain:leike.cc",
-          "domain:miwifi.com",
-          "domain:my.router",
-          "domain:p.to",
-          "domain:peiluyou.com",
-          "domain:phicomm.me",
-          "domain:routerlogin.com",
-          "domain:tendawifi.com",
-          "domain:zte.home"
+          "domain:example-example.com",
+          "domain:example-example2.com"
         ]
       },
       {
         "type": "field",
-        "port": "1-65535",
-        "inboundTag": [],
-        "outboundTag": "proxy",
+        "port": "443",
+        "network": "udp",
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "outboundTag": "block",
         "domain": [
-          "geosite:telegram",
-          "geosite:netflix",
-          "geosite:geolocation-!cn",
-          "geosite:appledaily",
-          "geosite:github",
-          "geosite:twitter",
-          "geosite:amp",
-          "domain:ytimg.com",
-          "domain:ggpht.com",
-          "domain:humblebundle.com",
-          "domain:analytics.twitter.com",
-          "domain:g.whatsapp.net",
-          "instagram",
-          "twimg",
-          "steam",
-          "v2ex"
+          "geosite:category-ads-all"
         ]
       },
       {
         "type": "field",
-        "port": "1-65535",
-        "inboundTag": [],
-        "outboundTag": "proxy",
-        "ip": [
-          "91.108.4.0/22",
-          "91.108.56.0/22",
-          "91.108.56.0/23",
-          "91.108.56.0/24",
-          "91.108.8.0/22",
-          "109.239.140.0/24",
-          "149.154.160.0/20",
-          "149.154.160.0/22",
-          "149.154.164.0/22",
-          "149.154.168.0/22",
-          "149.154.172.0/22",
-          "149.154.167.0/24",
-          "149.154.175.0/24",
-          "2001:67c:4e8::/48",
-          "2001:b28:f23d::/48",
-          "2001:b28:f23f::/48"
+        "outboundTag": "direct",
+        "domain": [
+          "domain:dns.alidns.com",
+          "domain:doh.pub",
+          "domain:dot.pub",
+          "domain:doh.360.cn",
+          "domain:dot.360.cn",
+          "geosite:cn",
+          "geosite:geolocation-cn"
         ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "direct",
+        "ip": [
+          "223.5.5.5/32",
+          "223.6.6.6/32",
+          "2400:3200::1/128",
+          "2400:3200:baba::1/128",
+          "119.29.29.29/32",
+          "1.12.12.12/32",
+          "120.53.53.53/32",
+          "2402:4e00::/128",
+          "2402:4e00:1::/128",
+          "180.76.76.76/32",
+          "2400:da00::6666/128",
+          "114.114.114.114/32",
+          "114.114.115.115/32",
+          "180.184.1.1/32",
+          "180.184.2.2/32",
+          "101.226.4.6/32",
+          "218.30.118.6/32",
+          "123.125.81.6/32",
+          "140.207.198.6/32",
+          "geoip:private",
+          "geoip:cn"
+        ]
+      },
+      {
+        "type": "field",
+        "port": "0-65535",
+        "outboundTag": "proxy"
       }
     ]
   }
