@@ -1,11 +1,16 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/tidwall/gjson"
+	"github.com/xtls/xray-core/common/errors"
+	"io"
 	"log"
 	"math/rand/v2"
+	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -132,6 +137,121 @@ func interfaceServer() {
 	router.Run("0.0.0.0:8081")
 }
 
+type subscrideUrl struct {
+	protol     string
+	serverUrl  string
+	serverPort string
+	password   string
+	sni        string
+}
+
+func parseSubscride(trojanUrl string) (su subscrideUrl, err error) {
+
+	// 原始字符串
+	rawString := trojanUrl
+	// 去掉前缀 "trojan://"
+	if !strings.HasPrefix(rawString, "trojan://") {
+		fmt.Println("字符串格式不正确")
+		return su, errors.New("格式错误")
+	}
+	rawString = strings.TrimPrefix(rawString, "trojan://")
+
+	su.protol = "trojan"
+
+	// 分割用户信息和剩余部分
+	parts := strings.SplitN(rawString, "@", 2)
+	if len(parts) != 2 {
+		fmt.Println("解析失败")
+		return su, errors.New("解析失败")
+	}
+
+	// 获取密码
+	password := parts[0]
+	su.password = password
+
+	// 分割域名和查询参数
+	domainAndPort := parts[1]
+	urlParts := strings.SplitN(domainAndPort, "?", 2)
+	domainWithPort := urlParts[0]
+
+	// 获取域名
+	domain := domainWithPort
+
+	// 如果存在查询参数，获取 query 部分
+	var query string
+	if len(urlParts) > 1 {
+		query = urlParts[1]
+	}
+
+	// 处理域名和查询参数
+	urlPart, err := url.Parse("http://" + domain) // 假设是HTTP，因为没有协议
+	if err != nil {
+		fmt.Println("解析URL失败:", err)
+		return su, err
+	}
+
+	su.serverUrl = strings.Split(urlPart.Host, ":")[0]
+	su.serverPort = strings.Split(urlPart.Host, ":")[1]
+
+	//// 打印结果
+	//fmt.Println("域名:", urlPart.Host)
+	//fmt.Println("密码:", password)
+	//fmt.Println("查询参数:", query)
+
+	// 如果需要输出解析参数
+	if q, err := url.ParseQuery(query); err == nil {
+		//fmt.Println("解析的查询参数:")
+		for key, values := range q {
+			for _, value := range values {
+				//fmt.Printf("  %s: %s\n", key, value)
+				if key == "sni" {
+					su.sni = value
+				}
+			}
+		}
+	}
+
+	return
+
+}
+
+func getSubscribe() ([]interface{}, error) {
+	// 订阅
+	subscrideUrl := "https://dawson0207.xn--3iq226gfdb94q.com/api/v1/client/subscribe?token=42ececcc574c467e9308b5e806f5d0c5"
+	req, err := http.NewRequest("GET", subscrideUrl, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36")
+
+	client := &http.Client{}
+	res, err := client.Do(req) // 发送请求
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	body, _ := io.ReadAll(res.Body)
+
+	decodedData, err := base64.StdEncoding.DecodeString(string(body))
+	if err != nil {
+		return nil, err
+	}
+
+	decodedString := string(decodedData)
+	for _, subscride := range strings.Split(decodedString, "\n") {
+
+		//parsedURL, _ := url.Parse(subscride)
+		//fmt.Println(parsedURL.Host, parsedURL.Port(), parsedURL.Query())
+		sResult, err := parseSubscride(subscride)
+		if err == nil {
+			fmt.Println(sResult)
+		}
+	}
+	return nil, nil
+}
+
 func run() {
 	server, err := startXray()
 	if err != nil {
@@ -210,6 +330,8 @@ func modifyConfigFile() error {
 }
 
 func timerRun() {
+
+	getSubscribe()
 
 	go func() {
 		handleFlag()

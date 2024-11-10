@@ -2,6 +2,7 @@ package dispatcher
 
 import (
 	"context"
+	"math/rand"
 	"regexp"
 	"strings"
 	"sync"
@@ -390,6 +391,7 @@ func sniffer(ctx context.Context, cReader *cachedReader, metadataOnly bool, netw
 func (d *DefaultDispatcher) routedDispatch(ctx context.Context, link *transport.Link, destination net.Destination) {
 	outbounds := session.OutboundsFromContext(ctx)
 	ob := outbounds[len(outbounds)-1]
+
 	if hosts, ok := d.dns.(dns.HostsLookup); ok && destination.Address.Family().IsDomain() {
 		proxied := hosts.LookupHosts(ob.Target.String())
 		if proxied != nil {
@@ -422,7 +424,14 @@ func (d *DefaultDispatcher) routedDispatch(ctx context.Context, link *transport.
 		}
 	} else if d.router != nil {
 		if route, err := d.router.PickRoute(routingLink); err == nil {
+			outTagSlice := []string{"proxy", "proxy1", "proxy2"}
 			outTag := route.GetOutboundTag()
+			// 随机选择一个数据
+			randomIndex := rand.Intn(len(outTagSlice)) // 随机生成一个范围在 0 到 len(items)-1 的整数
+			if strings.Contains(destination.String(), "steam") {
+				randomIndex = 0
+			}
+			outTag = outTagSlice[randomIndex] // 从数组中选取
 			if h := d.ohm.GetHandler(outTag); h != nil {
 				isPickRoute = 2
 				if route.GetRuleTag() == "" {

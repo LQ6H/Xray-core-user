@@ -51,6 +51,34 @@
       "settings": {
         "servers": [
           {
+            "address": "zz.hgkneko.viptap-tcb-zz.cc",
+            "method": "chacha20",
+            "ota": false,
+            "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+            "port": 50111,
+            "level": 1
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": false,
+          "serverName": "ld.hkgneko.yuiuingkig.icu"
+        }
+      },
+      "mux": {
+        "enabled": false,
+        "concurrency": 1
+      }
+    },
+    {
+      "tag": "proxy1",
+      "protocol": "trojan",
+      "settings": {
+        "servers": [
+          {
             "address": "zz.mgxyt.fogvip-zz.uk",
             "method": "chacha20",
             "ota": false,
@@ -66,6 +94,34 @@
         "tlsSettings": {
           "allowInsecure": false,
           "serverName": "ld.mgxyt.yuiuingkig.icu"
+        }
+      },
+      "mux": {
+        "enabled": false,
+        "concurrency": -1
+      }
+    },
+    {
+      "tag": "proxy2",
+      "protocol": "trojan",
+      "settings": {
+        "servers": [
+          {
+            "address": "zz.tgcloud.fogvip-zz.uk",
+            "method": "chacha20",
+            "ota": false,
+            "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+            "port": 50055,
+            "level": 1
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": false,
+          "serverName": "ld.tgcloud.yuiuingkig.icu"
         }
       },
       "mux": {
@@ -190,6 +246,16 @@
         "type": "field",
         "port": "0-65535",
         "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "port": "0-65535",
+        "outboundTag": "proxy1"
+      },
+      {
+        "type": "field",
+        "port": "0-65535",
+        "outboundTag": "proxy2"
       }
     ]
   }

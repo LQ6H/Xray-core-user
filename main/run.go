@@ -214,8 +214,8 @@ func getConfigFormat() string {
 
 func startXray() (core.Server, error) {
 	configFiles := getConfigFilePath(true)
-	var ch chan string
-	ch <- "tete"
+	//var ch chan string
+	//ch <- "tete"
 	// config, err := core.LoadConfig(getConfigFormat(), configFiles[0], configFiles)
 	c, err := core.LoadConfig(getConfigFormat(), configFiles)
 	if err != nil {
