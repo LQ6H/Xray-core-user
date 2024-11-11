@@ -1,262 +1,1252 @@
 {
-  "log": {
-    "access": "",
-    "error": "",
-    "loglevel": "debug"
-  },
-  "inbounds": [
-    {
-      "tag": "socks",
-      "port": 10085,
-      "listen": "127.0.0.1",
-      "protocol": "socks",
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ],
-        "routeOnly": false
-      },
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "allowTransparent": false
-      }
+    "log": {
+        "access": "",
+        "error": "",
+        "loglevel": "debug"
     },
-    {
-      "tag": "http",
-      "port": 10086,
-      "listen": "127.0.0.1",
-      "protocol": "http",
-      "sniffing": {
-        "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ],
-        "routeOnly": false
-      },
-      "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "allowTransparent": false
-      }
+    "inbounds": [
+        {
+            "tag": "socks",
+            "port": 10085,
+            "listen": "0.0.0.0",
+            "protocol": "socks",
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ],
+                "routeOnly": false
+            },
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "allowTransparent": false
+            }
+        },
+        {
+            "tag": "http",
+            "port": 10086,
+            "listen": "0.0.0.0",
+            "protocol": "http",
+            "sniffing": {
+                "enabled": true,
+                "destOverride": [
+                    "http",
+                    "tls"
+                ],
+                "routeOnly": false
+            },
+            "settings": {
+                "auth": "noauth",
+                "udp": true,
+                "allowTransparent": false
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "proxy0",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgzl.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50069,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgzl02.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy1",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgzl.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50069,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgzl02.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy2",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgzl.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50069,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgzl02.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy3",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgzl.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50069,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgzl02.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy4",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xg01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40001,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgg01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy5",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgzl.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50069,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgzl02.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy6",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgb.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40024,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xghk03.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy7",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgb.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40025,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xghk03.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy8",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgys.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40052,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgys01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy9",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.hg01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40021,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.hg01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy10",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.jp01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40014,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.jp01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy11",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.tw01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40036,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.tw01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy12",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xinjp01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40013,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xinjp01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy13",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.mgxyt.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40005,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.mgxyt.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy14",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.mgxyt.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40006,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.mgxyt.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy15",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.usa02.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40044,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.meiguo02.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy16",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.hgkneko.viptap-tcb-zz.cc",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50111,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.hkgneko.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy17",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.hgkneko.viptap-tcb-zz.cc",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50112,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.hkgneko.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy18",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.2hkmix.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50306,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.2heix.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy19",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.2pkshk.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50307,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.2heix.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy20",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xgbig.viptap-tcb-zz.cc",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50070,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xgbig.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy21",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.hg01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40021,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.hg01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy22",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.tw01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40037,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.tw01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy23",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.usa01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50072,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.usa01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy24",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.usa02.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40045,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.meiguo02.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy25",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.mglsj.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50108,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.mglsj.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy26",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.ysls.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50308,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.vegas.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy27",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.tgcloud.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50055,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.tgcloud.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy28",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.mlxy-1.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50117,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.mlxy-cn.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy29",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.jp01.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40015,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.jp01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy30",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.jp03.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50056,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.rbv2.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy31",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.xinjp02.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 40017,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xinjp01.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "proxy32",
+            "protocol": "trojan",
+            "settings": {
+                "servers": [
+                    {
+                        "address": "zz.sghkg.fogvip-zz.uk",
+                        "method": "chacha20",
+                        "ota": false,
+                        "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
+                        "port": 50311,
+                        "level": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "allowInsecure": false,
+                    "serverName": "ld.xjpsghkg.yuiuingkig.icu"
+                }
+            },
+            "mux": {
+                "enabled": false,
+                "concurrency": 1
+            }
+        },
+        {
+            "tag": "direct",
+            "protocol": "freedom",
+            "settings": {}
+        },
+        {
+            "tag": "block",
+            "protocol": "blackhole",
+            "settings": {
+                "response": {
+                    "type": "http"
+                }
+            }
+        }
+    ],
+    "dns": {
+        "hosts": {
+            "dns.google": "8.8.8.8",
+            "proxy.example.com": "127.0.0.1"
+        },
+        "servers": [
+            {
+                "address": "223.5.5.5",
+                "domains": [
+                    "geosite:cn",
+                    "geosite:geolocation-cn"
+                ],
+                "expectIPs": [
+                    "geoip:cn"
+                ]
+            },
+            "1.1.1.1",
+            "8.8.8.8",
+            "https://dns.google/dns-query",
+            {
+                "address": "223.5.5.5",
+                "domains": [
+                    "zz.mgxyt.fogvip-zz.uk"
+                ]
+            }
+        ]
+    },
+    "routing": {
+        "domainStrategy": "AsIs",
+        "rules": [
+            {
+                "type": "field",
+                "inboundTag": [
+                    "api"
+                ],
+                "outboundTag": "api"
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "domain:example-example.com",
+                    "domain:example-example2.com"
+                ]
+            },
+            {
+                "type": "field",
+                "port": "443",
+                "network": "udp",
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "outboundTag": "block",
+                "domain": [
+                    "geosite:category-ads-all"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "domain:dns.alidns.com",
+                    "domain:doh.pub",
+                    "domain:dot.pub",
+                    "domain:doh.360.cn",
+                    "domain:dot.360.cn",
+                    "geosite:cn",
+                    "geosite:geolocation-cn"
+                ]
+            },
+            {
+                "type": "field",
+                "outboundTag": "direct",
+                "ip": [
+                    "223.5.5.5/32",
+                    "223.6.6.6/32",
+                    "2400:3200::1/128",
+                    "2400:3200:baba::1/128",
+                    "119.29.29.29/32",
+                    "1.12.12.12/32",
+                    "120.53.53.53/32",
+                    "2402:4e00::/128",
+                    "2402:4e00:1::/128",
+                    "180.76.76.76/32",
+                    "2400:da00::6666/128",
+                    "114.114.114.114/32",
+                    "114.114.115.115/32",
+                    "180.184.1.1/32",
+                    "180.184.2.2/32",
+                    "101.226.4.6/32",
+                    "218.30.118.6/32",
+                    "123.125.81.6/32",
+                    "140.207.198.6/32",
+                    "geoip:private",
+                    "geoip:cn"
+                ]
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy0"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy1"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy2"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy3"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy4"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy5"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy6"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy7"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy8"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy9"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy10"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy11"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy12"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy13"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy14"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy15"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy16"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy17"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy18"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy19"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy20"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy21"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy22"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy23"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy24"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy25"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy26"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy27"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy28"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy29"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy30"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy31"
+            },
+            {
+                "type": "field",
+                "port": "0-65535",
+                "outboundTag": "proxy32"
+            }
+        ]
     }
-  ],
-  "outbounds": [
-    {
-      "tag": "proxy",
-      "protocol": "trojan",
-      "settings": {
-        "servers": [
-          {
-            "address": "zz.hgkneko.viptap-tcb-zz.cc",
-            "method": "chacha20",
-            "ota": false,
-            "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
-            "port": 50111,
-            "level": 1
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": false,
-          "serverName": "ld.hkgneko.yuiuingkig.icu"
-        }
-      },
-      "mux": {
-        "enabled": false,
-        "concurrency": 1
-      }
-    },
-    {
-      "tag": "proxy1",
-      "protocol": "trojan",
-      "settings": {
-        "servers": [
-          {
-            "address": "zz.mgxyt.fogvip-zz.uk",
-            "method": "chacha20",
-            "ota": false,
-            "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
-            "port": 40006,
-            "level": 1
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": false,
-          "serverName": "ld.mgxyt.yuiuingkig.icu"
-        }
-      },
-      "mux": {
-        "enabled": false,
-        "concurrency": -1
-      }
-    },
-    {
-      "tag": "proxy2",
-      "protocol": "trojan",
-      "settings": {
-        "servers": [
-          {
-            "address": "zz.tgcloud.fogvip-zz.uk",
-            "method": "chacha20",
-            "ota": false,
-            "password": "fa737811-14ea-40b2-b07e-c9b0427b05a9",
-            "port": 50055,
-            "level": 1
-          }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "tls",
-        "tlsSettings": {
-          "allowInsecure": false,
-          "serverName": "ld.tgcloud.yuiuingkig.icu"
-        }
-      },
-      "mux": {
-        "enabled": false,
-        "concurrency": -1
-      }
-    },
-    {
-      "tag": "direct",
-      "protocol": "freedom",
-      "settings": {}
-    },
-    {
-      "tag": "block",
-      "protocol": "blackhole",
-      "settings": {
-        "response": {
-          "type": "http"
-        }
-      }
-    }
-  ],
-  "dns": {
-    "hosts": {
-      "dns.google": "8.8.8.8",
-      "proxy.example.com": "127.0.0.1"
-    },
-    "servers": [
-      {
-        "address": "223.5.5.5",
-        "domains": [
-          "geosite:cn",
-          "geosite:geolocation-cn"
-        ],
-        "expectIPs": [
-          "geoip:cn"
-        ]
-      },
-      "1.1.1.1",
-      "8.8.8.8",
-      "https://dns.google/dns-query",
-      {
-        "address": "223.5.5.5",
-        "domains": [
-          "zz.mgxyt.fogvip-zz.uk"
-        ]
-      }
-    ]
-  },
-  "routing": {
-    "domainStrategy": "AsIs",
-    "rules": [
-      {
-        "type": "field",
-        "inboundTag": [
-          "api"
-        ],
-        "outboundTag": "api"
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "domain": [
-          "domain:example-example.com",
-          "domain:example-example2.com"
-        ]
-      },
-      {
-        "type": "field",
-        "port": "443",
-        "network": "udp",
-        "outboundTag": "block"
-      },
-      {
-        "type": "field",
-        "outboundTag": "block",
-        "domain": [
-          "geosite:category-ads-all"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "domain": [
-          "domain:dns.alidns.com",
-          "domain:doh.pub",
-          "domain:dot.pub",
-          "domain:doh.360.cn",
-          "domain:dot.360.cn",
-          "geosite:cn",
-          "geosite:geolocation-cn"
-        ]
-      },
-      {
-        "type": "field",
-        "outboundTag": "direct",
-        "ip": [
-          "223.5.5.5/32",
-          "223.6.6.6/32",
-          "2400:3200::1/128",
-          "2400:3200:baba::1/128",
-          "119.29.29.29/32",
-          "1.12.12.12/32",
-          "120.53.53.53/32",
-          "2402:4e00::/128",
-          "2402:4e00:1::/128",
-          "180.76.76.76/32",
-          "2400:da00::6666/128",
-          "114.114.114.114/32",
-          "114.114.115.115/32",
-          "180.184.1.1/32",
-          "180.184.2.2/32",
-          "101.226.4.6/32",
-          "218.30.118.6/32",
-          "123.125.81.6/32",
-          "140.207.198.6/32",
-          "geoip:private",
-          "geoip:cn"
-        ]
-      },
-      {
-        "type": "field",
-        "port": "0-65535",
-        "outboundTag": "proxy"
-      },
-      {
-        "type": "field",
-        "port": "0-65535",
-        "outboundTag": "proxy1"
-      },
-      {
-        "type": "field",
-        "port": "0-65535",
-        "outboundTag": "proxy2"
-      }
-    ]
-  }
 }

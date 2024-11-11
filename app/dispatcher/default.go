@@ -424,7 +424,7 @@ func (d *DefaultDispatcher) routedDispatch(ctx context.Context, link *transport.
 		}
 	} else if d.router != nil {
 		if route, err := d.router.PickRoute(routingLink); err == nil {
-			outTagSlice := []string{"proxy", "proxy1", "proxy2"}
+			outTagSlice := []string{"proxy0", "proxy1", "proxy2", "proxy3", "proxy4", "proxy5", "proxy6", "proxy7", "proxy8", "proxy9", "proxy10", "proxy11", "proxy12", "proxy13", "proxy14", "proxy15", "proxy16", "proxy17", "proxy18", "proxy19", "proxy20", "proxy21", "proxy22", "proxy23", "proxy24", "proxy25", "proxy26", "proxy27", "proxy28", "proxy29", "proxy30", "proxy31", "proxy32"}
 			outTag := route.GetOutboundTag()
 			// 随机选择一个数据
 			randomIndex := rand.Intn(len(outTagSlice)) // 随机生成一个范围在 0 到 len(items)-1 的整数

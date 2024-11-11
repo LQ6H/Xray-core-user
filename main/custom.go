@@ -331,7 +331,7 @@ func modifyConfigFile() error {
 
 func timerRun() {
 
-	getSubscribe()
+	//getSubscribe()
 
 	go func() {
 		handleFlag()
