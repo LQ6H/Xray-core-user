@@ -3,9 +3,6 @@ package main
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/tidwall/gjson"
-	"github.com/xtls/xray-core/common/errors"
 	"io"
 	"log"
 	"math/rand/v2"
@@ -16,6 +13,10 @@ import (
 	"runtime"
 	"runtime/debug"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+	"github.com/tidwall/gjson"
+	"github.com/xtls/xray-core/common/errors"
 )
 
 type vpn struct {
@@ -34,95 +35,6 @@ var (
 		{protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgzl.fogvip-zz.uk", server_port: "50069", sni: "ld.xgzl02.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgzl.fogvip-zz.uk", server_port: "50069", sni: "ld.xgzl02.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgzl.fogvip-zz.uk", server_port: "50069", sni: "ld.xgzl02.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgzl.fogvip-zz.uk", server_port: "50069", sni: "ld.xgzl02.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xg01.fogvip-zz.uk", server_port: "40001", sni: "ld.xgg01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgzl.fogvip-zz.uk", server_port: "50069", sni: "ld.xgzl02.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgb.fogvip-zz.uk", server_port: "40024", sni: "ld.xghk03.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgb.fogvip-zz.uk", server_port: "40025", sni: "ld.xghk03.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgys.fogvip-zz.uk", server_port: "40052", sni: "ld.xgys01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.hg01.fogvip-zz.uk", server_port: "40021", sni: "ld.hg01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.jp01.fogvip-zz.uk", server_port: "40014", sni: "ld.jp01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.tw01.fogvip-zz.uk", server_port: "40036", sni: "ld.tw01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xinjp01.fogvip-zz.uk", server_port: "40013", sni: "ld.xinjp01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.mgxyt.fogvip-zz.uk", server_port: "40005", sni: "ld.mgxyt.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.mgxyt.fogvip-zz.uk", server_port: "40006", sni: "ld.mgxyt.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.usa02.fogvip-zz.uk", server_port: "40044", sni: "ld.meiguo02.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.hgkneko.viptap-tcb-zz.cc", server_port: "50111", sni: "ld.hkgneko.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.hgkneko.viptap-tcb-zz.cc", server_port: "50112", sni: "ld.hkgneko.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.2hkmix.fogvip-zz.uk", server_port: "50306", sni: "ld.2heix.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.2pkshk.fogvip-zz.uk", server_port: "50307", sni: "ld.2heix.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xgbig.viptap-tcb-zz.cc", server_port: "50070", sni: "ld.xgbig.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.hg01.fogvip-zz.uk", server_port: "40021", sni: "ld.hg01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.tw01.fogvip-zz.uk", server_port: "40037", sni: "ld.tw01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.usa01.fogvip-zz.uk", server_port: "50072", sni: "ld.usa01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.usa02.fogvip-zz.uk", server_port: "40045", sni: "ld.meiguo02.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.mglsj.fogvip-zz.uk", server_port: "50108", sni: "ld.mglsj.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.ysls.fogvip-zz.uk", server_port: "50308", sni: "ld.vegas.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.tgcloud.fogvip-zz.uk", server_port: "50055", sni: "ld.tgcloud.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.mlxy-1.fogvip-zz.uk", server_port: "50117", sni: "ld.mlxy-cn.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.jp01.fogvip-zz.uk", server_port: "40015", sni: "ld.jp01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.jp03.fogvip-zz.uk", server_port: "50056", sni: "ld.rbv2.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.xinjp02.fogvip-zz.uk", server_port: "40017", sni: "ld.xinjp01.yuiuingkig.icu"}, {protol: "trojan", password: "fa737811-14ea-40b2-b07e-c9b0427b05a9", server_address: "zz.sghkg.fogvip-zz.uk", server_port: "50311", sni: "ld.xjpsghkg.yuiuingkig.icu"},
 	}
 )
-
-type configStruct struct {
-	Policy struct {
-		System struct {
-			StatsOutboundUplink   bool `json:"statsOutboundUplink"`
-			StatsOutboundDownlink bool `json:"statsOutboundDownlink"`
-		} `json:"system"`
-	} `json:"policy"`
-	Log struct {
-		Access   string `json:"access"`
-		Error    string `json:"error"`
-		Loglevel string `json:"loglevel"`
-	} `json:"log"`
-	Inbounds []struct {
-		Tag      string `json:"tag"`
-		Port     int    `json:"port"`
-		Listen   string `json:"listen"`
-		Protocol string `json:"protocol"`
-		Sniffing struct {
-			Enabled      bool     `json:"enabled"`
-			DestOverride []string `json:"destOverride"`
-		} `json:"sniffing,omitempty"`
-		Settings struct {
-			Auth             string `json:"auth"`
-			UDP              bool   `json:"udp"`
-			AllowTransparent bool   `json:"allowTransparent"`
-		} `json:"settings,omitempty"`
-		Settings0 struct {
-			UDP              bool `json:"udp"`
-			AllowTransparent bool `json:"allowTransparent"`
-		} `json:"settings,omitempty"`
-		Settings1 struct {
-			UDP              bool   `json:"udp"`
-			Address          string `json:"address"`
-			AllowTransparent bool   `json:"allowTransparent"`
-		} `json:"settings,omitempty"`
-	} `json:"inbounds"`
-	Outbounds []struct {
-		Tag      string `json:"tag"`
-		Protocol string `json:"protocol"`
-		Settings struct {
-			Servers []struct {
-				Address  string `json:"address"`
-				Method   string `json:"method"`
-				Ota      bool   `json:"ota"`
-				Password string `json:password`
-				Port     int    `json:"port"`
-				Level    int    `json:"level"`
-			} `json:"servers"`
-		} `json:"settings,omitempty"`
-		StreamSettings struct {
-			Network     string `json:"network"`
-			Security    string `json:"security"`
-			TLSSettings struct {
-				AllowInsecure bool   `json:"allowInsecure"`
-				ServerName    string `json:"serverName"`
-			} `json:"tlsSettings"`
-		} `json:"streamSettings,omitempty"`
-		Mux struct {
-			Enabled     bool `json:"enabled"`
-			Concurrency int  `json:"concurrency"`
-		} `json:"mux,omitempty"`
-		Settings0 struct {
-		} `json:"settings,omitempty"`
-		Settings1 struct {
-			Response struct {
-				Type string `json:"type"`
-			} `json:"response"`
-		} `json:"settings,omitempty"`
-	} `json:"outbounds"`
-	Stats struct {
-	} `json:"stats"`
-	API struct {
-		Tag      string   `json:"tag"`
-		Listen   string   `json:"listen"`
-		Services []string `json:"services"`
-	} `json:"api"`
-	Routing struct {
-		DomainStrategy string `json:"domainStrategy"`
-		Rules          []struct {
-			Type        string   `json:"type"`
-			InboundTag  []string `json:"inboundTag"`
-			OutboundTag string   `json:"outboundTag"`
-			Port        string   `json:"port,omitempty"`
-			Domain      []string `json:"domain,omitempty"`
-			IP          []string `json:"ip,omitempty"`
-		} `json:"rules"`
-	} `json:"routing"`
-}
 
 func interfaceServer() {
 
