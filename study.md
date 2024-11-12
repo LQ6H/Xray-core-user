@@ -146,14 +146,22 @@ type OutboundDetourConfig struct {
 
 
 
-一个`socks5` 请求进来的完整流程：
+一个`socks5` 协议代理，出站协议为`trojan`  请求代理的完整流程：
 
 ```
 1. core/xray.go/Start 中的 s.features中包含配置内容，然后调用其Start方法
 2. app/proxyman/inbound/inbound.go/Start 获取taggedHandlers, 调用Start方法
 3. app/proxyman/inbound/always.go/Start 获取workers, 然后调用其Start方法
 4. app/proxyman/inbound/worker.go/Start 协程调用
-5. app/proxyman/inbound/worker.go/callback 
-6. proxy/socks/server.go/Process
+5. transport/internet/tcp_hub.go/ListenTCP  调用
+6. app/proxyman/inbound/worker.go/callback  # 生成日志id
+7. proxy/socks/server.go/Process
+8. proxy/socks/server.go/processTCP
+9. app/dispatcher/default.go/Dispatch  # 从这一步进行路由分发
+10. app/dispatcher/default.go/routedDispatch
+11. transport/internet/tcp/dialer.go/Dial # dial 发送数据
+12. transport/internet/system_dialer.go/Dial
+13. proxy/trojan/client.go/Process  
+14. app/proxyman/inbound/worker.go/callback
 ```
 
