@@ -1,3 +1,5 @@
+`日志打印` 
+
 ```
 2024/11/12 15:18:00 Using default config:  E:\GolangProject\src\Xray-core-user\config.json
 2024/11/12 15:18:00 [Info] infra/conf/serial: Reading config: &{Name:E:\GolangProject\src\Xray-core-user\config.json Format:json}
@@ -49,7 +51,7 @@
 
 
 
-整个配置内容如下：
+整个配置内容主要功能配置如下：
 
 1. `api`
 
@@ -146,6 +148,60 @@ type OutboundDetourConfig struct {
 
 
 
+完整配置文件：
+
+```go
+type Config struct {
+	// Deprecated: Global transport config is no longer used
+	// left for returning error
+	Transport        map[string]json.RawMessage `json:"transport"`
+
+	LogConfig        *LogConfig              `json:"log"`
+	RouterConfig     *RouterConfig           `json:"routing"`
+	DNSConfig        *DNSConfig              `json:"dns"`
+	InboundConfigs   []InboundDetourConfig   `json:"inbounds"`
+	OutboundConfigs  []OutboundDetourConfig  `json:"outbounds"`
+	Policy           *PolicyConfig           `json:"policy"`
+	API              *APIConfig              `json:"api"`
+	Metrics          *MetricsConfig          `json:"metrics"`
+	Stats            *StatsConfig            `json:"stats"`
+	Reverse          *ReverseConfig          `json:"reverse"`
+	FakeDNS          *FakeDNSConfig          `json:"fakeDns"`
+	Observatory      *ObservatoryConfig      `json:"observatory"`
+	BurstObservatory *BurstObservatoryConfig `json:"burstObservatory"`
+}
+```
+
+
+
+```go
+type Instance struct {
+    access             sync.Mutex
+    features           []features.Feature
+    featureResolutions []resolution
+    running            bool
+    ctx                context.Context
+}
+```
+
+
+
+一个配置文件的加载过程：
+
+```
+1. main/run.go/executeRun  .exe文件启动默认参数run
+2. main/run.go/startXray  返回 core.Server
+	2.1 main/run.go/getConfigFilePath  获取配置文件，默认文件为工作目录下的config.json
+	2.2 core/config.go/LoadConfig   将上一步配置文件加载，调用ConfigBuilderForFiles, 实际上调用infra/conf/serial/builder.go/BuildConfig
+		2.2.1 infra/conf/serial/builder.go/mergeConfigs 内部调用ReaderDecoderByFormat["json"] 进行序列化数据
+		2.2.2 infra/conf/xray.go/Build  此函数有配置文件对象调用的，将Config转成core.Config
+	2.3 core/xray.go/New  将生成的core.Config 传进New中, 新建一个Instance
+		2.3.1 ***core/xray.go/initInstanceWithConfig***  将core.Config 和 Instance 传入，最重要的函数
+3. core/xray.go/Start  使用Instance调用Start
+```
+
+
+
 一个`socks5` 协议代理，出站协议为`trojan`  请求代理的完整流程：
 
 ```
@@ -163,5 +219,22 @@ type OutboundDetourConfig struct {
 12. transport/internet/system_dialer.go/Dial
 13. proxy/trojan/client.go/Process  
 14. app/proxyman/inbound/worker.go/callback
+```
+
+
+
+出战`tag` 选择：
+
+```
+1. app/dispatcher/default.go/routedDispatch  进入路由分发, 调用PickRoute
+2. app/router/router.go/PickRoute
+	2.1 app/router/router.go/pickRouteInternal
+		for _, rule := range r.rules {
+            if rule.Apply(ctx) {
+                return rule, ctx, nil
+            }
+        }
+        
+        选择出站tag
 ```
 
