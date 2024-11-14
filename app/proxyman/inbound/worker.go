@@ -58,11 +58,16 @@ func getTProxyType(s *internet.MemoryStreamConfig) internet.SocketConfig_TProxyM
 }
 
 func (w *tcpWorker) callback(conn stat.Connection) {
+	// 根据 w.ctx 为父类上下文，生成新的ctx
 	ctx, cancel := context.WithCancel(w.ctx)
+	// 生成新的日志id
 	sid := session.NewID()
+	// 将生成的日志id 赋值给新的ctx,
 	ctx = c.ContextWithID(ctx, sid)
 
+	// 声明一个新的出战切片变量
 	outbounds := []*session.Outbound{{}}
+	// 获取w的recvOrigDest为False
 	if w.recvOrigDest {
 		var dest net.Destination
 		switch getTProxyType(w.stream) {
@@ -80,8 +85,9 @@ func (w *tcpWorker) callback(conn stat.Connection) {
 			outbounds[0].Target = dest
 		}
 	}
+	// 根据出站outbounds, 生成新的ctx
 	ctx = session.ContextWithOutbounds(ctx, outbounds)
-
+	// 上传流量和下载流量是否开启
 	if w.uplinkCounter != nil || w.downlinkCounter != nil {
 		conn = &stat.CounterConnection{
 			Connection:   conn,
@@ -95,7 +101,6 @@ func (w *tcpWorker) callback(conn stat.Connection) {
 		Tag:     w.tag,
 		Conn:    conn,
 	})
-
 	content := new(session.Content)
 	if w.sniffingConfig != nil {
 		content.SniffingRequest.Enabled = w.sniffingConfig.Enabled
@@ -104,8 +109,9 @@ func (w *tcpWorker) callback(conn stat.Connection) {
 		content.SniffingRequest.MetadataOnly = w.sniffingConfig.MetadataOnly
 		content.SniffingRequest.RouteOnly = w.sniffingConfig.RouteOnly
 	}
+	// 根据content, 生成新的ctx
 	ctx = session.ContextWithContent(ctx, content)
-
+	// 调用代理 Process 方法
 	if err := w.proxy.Process(ctx, net.Network_TCP, conn, w.dispatcher); err != nil {
 		errors.LogInfoInner(ctx, err, "connection ends")
 	}

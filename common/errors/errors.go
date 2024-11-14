@@ -176,10 +176,10 @@ func doLog(ctx context.Context, inner error, severity log.Severity, msg ...inter
 	if len(details) >= trim {
 		details = details[trim:]
 	}
-	i := strings.Index(details, ".")
-	if i > 0 {
-		details = details[:i]
-	}
+	//i := strings.Index(details, ".")
+	//if i > 0 {
+	//	details = details[:i]
+	//}
 	err := &Error{
 		message:  msg,
 		severity: severity,

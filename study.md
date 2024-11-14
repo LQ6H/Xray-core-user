@@ -186,6 +186,34 @@ type Instance struct {
 
 
 
+`xray-core` 初始化过程：
+
+```
+2024/11/14 16:59:52 [Debug] app/log: Logger started
+2024/11/14 16:59:52 [Info] app/dns: DNS: created UDP client initialized for 223.5.5.5:53
+2024/11/14 16:59:52 [Info] app/dns: DNS: created UDP client initialized for 1.1.1.1:53
+2024/11/14 16:59:52 [Info] app/dns: DNS: created UDP client initialized for 8.8.8.8:53
+2024/11/14 16:59:52 [Info] app/dns: DNS: created Remote DOH client for https://dns.google/dns-query
+2024/11/14 16:59:52 [Info] app/dns: DNS: created UDP client initialized for 223.5.5.5:53
+2024/11/14 16:59:52 [Debug] app/router: MphDomainMatcher is enabled for 2 domain rule(s)
+2024/11/14 16:59:52 [Debug] app/router: MphDomainMatcher is enabled for 47548 domain rule(s)
+2024/11/14 16:59:52 [Debug] app/router: MphDomainMatcher is enabled for 72406 domain rule(s)
+2024/11/14 16:59:52 [Debug] app/proxyman/inbound: creating stream worker on 0.0.0.0:10085
+2024/11/14 16:59:52 [Debug] app/proxyman/inbound: creating stream worker on 0.0.0.0:10086
+2024/11/14 16:59:52 [Info] transport/internet/tcp: listening TCP on 0.0.0.0:10085
+2024/11/14 16:59:52 [Info] transport/internet/udp: listening UDP on 0.0.0.0:10085
+2024/11/14 16:59:52 [Info] transport/internet/tcp: listening TCP on 0.0.0.0:10086
+2024/11/14 16:59:52 [Warning] core: Xray 24.10.16 started
+```
+
+
+
+
+
+
+
+
+
 一个配置文件的加载过程：
 
 ```
