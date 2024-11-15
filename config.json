@@ -4,6 +4,11 @@
         "error": "",
         "loglevel": "debug"
     },
+    "api": {
+        "tag": "api",
+        "listen": "127.0.0.1:10084",
+        "services": ["HandlerService", "LoggerService", "StatsService", "RoutingService"]
+    },
     "inbounds": [
         {
             "tag": "socks",
