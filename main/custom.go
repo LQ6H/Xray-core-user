@@ -198,9 +198,12 @@ func handleFlag() {
 	for {
 		select {
 		case <-reStartFlag:
-			if err := modifyConfigFile(); err == nil {
-				go run()
-			}
+			//if err := modifyConfigFile(); err == nil {
+			//	go run()
+			//}
+			go func() {
+				run()
+			}()
 		default:
 		}
 	}
