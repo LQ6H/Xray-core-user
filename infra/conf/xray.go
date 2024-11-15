@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/xtls/xray-core/app/dispatcher"
 	"github.com/xtls/xray-core/app/proxyman"
@@ -167,6 +169,7 @@ type InboundDetourConfig struct {
 func (c *InboundDetourConfig) Build() (*core.InboundHandlerConfig, error) {
 	receiverSettings := &proxyman.ReceiverConfig{}
 
+	// 不设置监听ip，但是必须设置监听端口
 	if c.ListenOn == nil {
 		// Listen on anyip, must set PortList
 		if c.PortList == nil {
@@ -175,6 +178,7 @@ func (c *InboundDetourConfig) Build() (*core.InboundHandlerConfig, error) {
 		receiverSettings.PortList = c.PortList.Build()
 	} else {
 		// Listen on specific IP or Unix Domain Socket
+		// 设置监听地址
 		receiverSettings.Listen = c.ListenOn.Build()
 		listenDS := c.ListenOn.Family().IsDomain() && (filepath.IsAbs(c.ListenOn.Domain()) || c.ListenOn.Domain()[0] == '@')
 		listenIP := c.ListenOn.Family().IsIP() || (c.ListenOn.Family().IsDomain() && c.ListenOn.Domain() == "localhost")
@@ -363,7 +367,7 @@ func (c *StatsConfig) Build() (*stats.Config, error) {
 type Config struct {
 	// Deprecated: Global transport config is no longer used
 	// left for returning error
-	Transport        map[string]json.RawMessage `json:"transport"`
+	Transport map[string]json.RawMessage `json:"transport"`
 
 	LogConfig        *LogConfig              `json:"log"`
 	RouterConfig     *RouterConfig           `json:"routing"`
@@ -489,7 +493,7 @@ func (c *Config) Build() (*core.Config, error) {
 	if err := PostProcessConfigureFile(c); err != nil {
 		return nil, err
 	}
-
+	// 新建一个 &core.Config
 	config := &core.Config{
 		App: []*serial.TypedMessage{
 			serial.ToTypedMessage(&dispatcher.Config{}),
@@ -497,7 +501,7 @@ func (c *Config) Build() (*core.Config, error) {
 			serial.ToTypedMessage(&proxyman.OutboundConfig{}),
 		},
 	}
-
+	// 获取api配置信息到config.App
 	if c.API != nil {
 		apiConf, err := c.API.Build()
 		if err != nil {
@@ -505,6 +509,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append(config.App, serial.ToTypedMessage(apiConf))
 	}
+	// 获取Metrics配置信息到config.App
 	if c.Metrics != nil {
 		metricsConf, err := c.Metrics.Build()
 		if err != nil {
@@ -512,6 +517,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append(config.App, serial.ToTypedMessage(metricsConf))
 	}
+	// 获取Stats配置信息到config.App
 	if c.Stats != nil {
 		statsConf, err := c.Stats.Build()
 		if err != nil {
@@ -519,8 +525,9 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append(config.App, serial.ToTypedMessage(statsConf))
 	}
-
+	// 新建logConfMsg变量
 	var logConfMsg *serial.TypedMessage
+	// 获取LogConfig配置到config.App
 	if c.LogConfig != nil {
 		logConfMsg = serial.ToTypedMessage(c.LogConfig.Build())
 	} else {
@@ -528,16 +535,26 @@ func (c *Config) Build() (*core.Config, error) {
 	}
 	// let logger module be the first App to start,
 	// so that other modules could print log during initiating
+	// 将日志模块放在第一个初始化，这样其它模块初始化可以打印日志
 	config.App = append([]*serial.TypedMessage{logConfMsg}, config.App...)
 
+	// 获取路由数据并配置
 	if c.RouterConfig != nil {
 		routerConfig, err := c.RouterConfig.Build()
 		if err != nil {
 			return nil, err
 		}
+
+		// 开始打乱出战路由
+		tmpRule := routerConfig.Rule[6:]
+		rand.New(rand.NewSource(time.Now().UnixNano()))
+		rand.Shuffle(len(tmpRule), func(i, j int) {
+			tmpRule[i], tmpRule[j] = tmpRule[j], tmpRule[i]
+		})
 		config.App = append(config.App, serial.ToTypedMessage(routerConfig))
 	}
 
+	// 获取dns数据并配置
 	if c.DNSConfig != nil {
 		dnsApp, err := c.DNSConfig.Build()
 		if err != nil {
@@ -545,7 +562,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append(config.App, serial.ToTypedMessage(dnsApp))
 	}
-
+	// 获取本地策略数据并配置
 	if c.Policy != nil {
 		pc, err := c.Policy.Build()
 		if err != nil {
@@ -553,7 +570,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append(config.App, serial.ToTypedMessage(pc))
 	}
-
+	// 获取反向代理数据并配置
 	if c.Reverse != nil {
 		r, err := c.Reverse.Build()
 		if err != nil {
@@ -561,7 +578,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append(config.App, serial.ToTypedMessage(r))
 	}
-
+	// 获取FakeDNS数据并配置
 	if c.FakeDNS != nil {
 		r, err := c.FakeDNS.Build()
 		if err != nil {
@@ -569,7 +586,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append([]*serial.TypedMessage{serial.ToTypedMessage(r)}, config.App...)
 	}
-
+	// 获取连接观测数据并配置
 	if c.Observatory != nil {
 		r, err := c.Observatory.Build()
 		if err != nil {
@@ -585,7 +602,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.App = append(config.App, serial.ToTypedMessage(r))
 	}
-
+	// 获取入站数据并配置
 	var inbounds []InboundDetourConfig
 
 	if len(c.InboundConfigs) > 0 {
@@ -603,7 +620,7 @@ func (c *Config) Build() (*core.Config, error) {
 		}
 		config.Inbound = append(config.Inbound, ic)
 	}
-
+	// 获取出站数据并配置
 	var outbounds []OutboundDetourConfig
 
 	if len(c.OutboundConfigs) > 0 {
